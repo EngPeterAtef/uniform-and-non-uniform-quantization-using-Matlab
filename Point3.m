@@ -5,7 +5,7 @@
 in_val = -6 : 0.01 : 6;
 n_bits = 3;
 xmax = 6;
-m = 0;
+m = 0; %m=1
 
 % functions calls
 q_ind = UniformQuantizer(in_val, n_bits, xmax, m);
