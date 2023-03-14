@@ -12,17 +12,18 @@ SNR_simulation = zeros(1, length(n_bits));
 
 % functions calls
 for i = 1 : length(n_bits)
-    q_ind = UniformQuantizer(in_val, n_bits(i), xmax, m);
-    deq_val = UniformDequantizer(q_ind, n_bits(i), xmax, m);
+	q_ind = UniformQuantizer(in_val, n_bits(i), xmax, m);
+	deq_val = UniformDequantizer(q_ind, n_bits(i), xmax, m);
 
-    quantization_error = in_val - deq_val;
+	quantization_error = in_val - deq_val;
 
-    E_quantization_error = mean(quantization_error.^2);
-    E_input = mean(in_val.^2);
+	E_quantization_error = mean(quantization_error.^2);
+	E_input = mean(in_val.^2);
 
-    SNR_theoretical(i) = mag2db(E_input / E_quantization_error);
+	SNR_simulation(i) = mag2db(E_input / E_quantization_error);
 
-    SNR_simulation(i) = mag2db(snr(in_val, quantization_error));
+	L = 2 ^ n_bits(i);
+	SNR_theoretical(i) = mag2db(E_input * ((3*(L^2))/(xmax^2)));
 end
 
 
@@ -30,4 +31,8 @@ end
 plot(n_bits, SNR_theoretical);
 hold on
 plot(n_bits, SNR_simulation);
+title('Quantizer/Dequantizer functions on a random input signal');
+xlabel('Number of bits');
+ylabel('SNR (dB)');
+legend({'SNR theoretical','SNR simulation'});
 
