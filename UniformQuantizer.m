@@ -20,12 +20,8 @@ function q_ind = UniformQuantizer(in_val, n_bits, xmax, m)
 		q_ind = q_ind + abs(min(q_ind)) + 1;
 	else
 		% midtread
-		deq_val = (round(in_val / Delta)) * Delta;
-    min_value = -Delta * n_bits + Delta;
-    deq_val(deq_val < min_value) = min_value;
-		
-    q_ind = (deq_val / Delta) + 2;
-    % q_ind = (deq_val / Delta) + (xmax / Delta);
+        q_ind = round((in_val + xmax) / Delta) + 1;
+        q_ind(q_ind >= L) = L;
 	end
 
 end
