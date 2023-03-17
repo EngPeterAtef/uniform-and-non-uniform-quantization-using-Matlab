@@ -8,12 +8,9 @@ clc
 n_bits = 2 : 1 : 8;
 m = 0;
 
-in_val = zeros(1, 10000);
-for i = 1 : 10000
-	sign = randi([0, 1], 1);
-	sign = (sign * 2) - 1;
-	in_val(i) = sign * exprnd(1);
-end
+sgn = 2 * randi([0 1], 1, 10000) - 1;
+in_val = sgn .* exprnd(1, 1, 10000);
+
 xmax = max(abs(in_val));
 
 SNR_theoretical = zeros(1, length(n_bits));
