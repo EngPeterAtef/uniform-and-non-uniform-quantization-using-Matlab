@@ -26,7 +26,6 @@ for i = 1 : length(n_bits)
     E_input = mean(in_val.^2);
 
     SNR_simulation(i) = mag2db(E_input / E_quantization_error);
-
     L = 2 ^ n_bits(i);
     SNR_theoretical(i) = mag2db(E_input * ((3*(L^2))/(xmax^2)));
 end
