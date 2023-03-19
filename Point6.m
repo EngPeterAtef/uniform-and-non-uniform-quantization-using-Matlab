@@ -27,12 +27,12 @@ for i = 1 : length(n_bits)
 
     q_ind = UniformQuantizer(y, n_bits(i), max(y), m);
     deq_val = UniformDequantizer(q_ind, n_bits(i), max(y), m);
-    %epander
-    z = sign .* (((1 + mu).^ abs(deq_val) - 1) / mu);%wtf??
-    %denormailse
+    %expander
+    z = sign .* (((1 + mu).^ abs(deq_val) - 1) / mu);
+    %denormailze
     z_final = z * xmax;
     
-    quantization_error = abs(x - z_final);%why abs??
+    quantization_error = x - z_final;
 
     E_quantization_error = mean(quantization_error.^2);
     E_input = mean(x.^2);
@@ -40,7 +40,7 @@ for i = 1 : length(n_bits)
     SNR_simulation(i) = mag2db(E_input / E_quantization_error);
     L = 2 ^ n_bits(i);
 
-    SNR_theoretical(i) = mag2db(((3*(L^2))/((log(1+mu))^2)));%snr in mue law
+    SNR_theoretical(i) = mag2db(((3*(L^2))/((log(1+mu))^2))); %snr in mue law
 end
 
 % plot
